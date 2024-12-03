@@ -59,9 +59,6 @@ class GlobalState {
       config: config,
       clashConfig: clashConfig,
     );
-    if (Platform.isAndroid) {
-      globalState.updateStartTime();
-    }
     await applyProfile(
       appState: appState,
       config: config,
@@ -86,7 +83,7 @@ class GlobalState {
           break;
         case AuthorizeCode.success:
           lastTunEnable = useClashConfig.tun.enable;
-          restartCore(
+          await restartCore(
             appState: appState,
             clashConfig: clashConfig,
             config: config,
