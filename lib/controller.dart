@@ -59,6 +59,14 @@ class AppController {
     });
   }
 
+  restartCore() async {
+    await globalState.restartCore(
+      appState: appState,
+      clashConfig: clashConfig,
+      config: config,
+    );
+  }
+
   updateStatus(bool isStart) async {
     if (isStart) {
       await globalState.handleStart();

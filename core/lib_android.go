@@ -13,6 +13,7 @@ import (
 	"github.com/metacubex/mihomo/component/dialer"
 	"github.com/metacubex/mihomo/component/process"
 	"github.com/metacubex/mihomo/constant"
+	"github.com/metacubex/mihomo/hub"
 	"github.com/metacubex/mihomo/listener/sing_tun"
 	"github.com/metacubex/mihomo/log"
 	"strconv"
@@ -91,10 +92,9 @@ func startTUN(fd C.int, port C.longlong) {
 		if tunListener != nil {
 			log.Infoln("TUN address: %v", tunListener.Address())
 		}
-		updateListeners()
 		now := time.Now()
-
 		runTime = &now
+		hub.ApplyConfig(currentConfig)
 	}()
 }
 

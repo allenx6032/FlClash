@@ -86,15 +86,11 @@ class GlobalState {
           break;
         case AuthorizeCode.success:
           lastTunEnable = useClashConfig.tun.enable;
-          await clashService?.startCore();
-          await initCore(
+          restartCore(
             appState: appState,
             clashConfig: clashConfig,
             config: config,
           );
-          if (isStart) {
-            await handleStart();
-          }
           return;
         case AuthorizeCode.error:
           useClashConfig.tun = useClashConfig.tun.copyWith(
@@ -135,6 +131,23 @@ class GlobalState {
     startTime ??= DateTime.now();
     await service?.init();
     startListenUpdate();
+  }
+
+  restartCore({
+    required AppState appState,
+    required ClashConfig clashConfig,
+    required Config config,
+    bool isPatch = true,
+  }) async {
+    await clashService?.startCore();
+    await initCore(
+      appState: appState,
+      clashConfig: clashConfig,
+      config: config,
+    );
+    if (isStart) {
+      await handleStart();
+    }
   }
 
   updateStartTime() {
